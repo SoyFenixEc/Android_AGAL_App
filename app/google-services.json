@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:726055931596:android:0f00f376a48ae9909cbc69",
+        "mobilesdk_app_id": "1:726055931596:android:1175845fb5611fb99cbc69",
         "android_client_info": {
-          "package_name": "app.agalplataformaeducativa.apps"
+          "package_name": "com.agalplataformaeducativa.webview"
         }
       },
       "oauth_client": [],

@@ -1,4 +1,4 @@
-package app.agalplataformaeducativa.apps // ✅ ¡PAQUETE CORRECTO!
+package com.agalplataformaeducativa.webview // ✅ ¡PAQUETE CORRECTO!
 
 import android.app.Application
 import com.google.android.gms.ads.MobileAds

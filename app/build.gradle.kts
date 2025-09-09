@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    namespace = "app.agalplataformaeducativa.apps" // ✅ ¡CAMBIA ESTO!
+    namespace = "com.agalplataformaeducativa.webview" // ✅ ¡CAMBIA ESTO!
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "app.agalplataformaeducativa.apps" // ✅ ¡CAMBIA ESTO!
+        applicationId = "com.agalplataformaeducativa.webview" // ✅ ¡CAMBIA ESTO!
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
-        versionName = "3.0"
+        versionCode = 1
+        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -1,4 +1,4 @@
-package app.agalplataformaeducativa.apps
+package com.agalplataformaeducativa.webview
 
 import android.content.Context
 import android.content.SharedPreferences

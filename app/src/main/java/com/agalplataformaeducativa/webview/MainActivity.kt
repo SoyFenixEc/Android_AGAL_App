@@ -1,4 +1,4 @@
-package app.agalplataformaeducativa.apps
+package com.agalplataformaeducativa.webview
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -26,8 +26,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import app.agalplataformaeducativa.apps.databinding.ActivityMainBinding
-import app.agalplataformaeducativa.apps.databinding.LayoutNoInternetBinding
+import com.agalplataformaeducativa.webview.databinding.ActivityMainBinding
+import com.agalplataformaeducativa.webview.databinding.LayoutNoInternetBinding
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView

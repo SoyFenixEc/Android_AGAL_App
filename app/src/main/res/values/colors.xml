@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="status_bar_color">#2196F3</color>
-    <color name="navigation_bar_color">#2196F3</color>
+    <color name="status_bar_color">#000000</color>
+    <color name="navigation_bar_color">#000000</color>
 
     <!-- Colores para modo noche -->
     <color name="status_bar_color_night">#121212</color>
