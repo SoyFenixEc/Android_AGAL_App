@@ -1,6 +1,6 @@
 Webview proyecto hecho en klotin
 
-
-firma 
-soyfenixec@gmail.com
-123qweQWE.
+carpeta key androidstudio
+    firma android studio AGAL_android_webview.jks 
+    soyfenixec@gmail.com
+    123qweQWE.
