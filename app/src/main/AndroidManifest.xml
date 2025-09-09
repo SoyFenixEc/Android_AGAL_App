@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    
+
     package="app.agalplataformaeducativa.apps"> <!-- ✅ ¡DEBE SER ESTE! -->
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,6 +12,10 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+
+    <meta-data
+        android:name="com.google.android.gms.ads.8864891056"
+        android:value="ca-app-pub-7277241406857965~8864891056"/>
 
     <application
         android:name=".MyApplication"
