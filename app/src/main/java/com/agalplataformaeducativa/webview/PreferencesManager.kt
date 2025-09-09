@@ -13,4 +13,4 @@ class PreferencesManager(context: Context) {
     var isFirstLaunch: Boolean
         get() = prefs.getBoolean("IS_FIRST_LAUNCH", true)
         set(value) = prefs.edit().putBoolean("IS_FIRST_LAUNCH", value).apply()
-}
+}//sds
