@@ -13,9 +13,11 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
+    <!-- ESTA ES LA LÍNEA CORRECTA CON TUS CREDENCIALES -->
     <meta-data
-        android:name="com.google.android.gms.ads.8864891056"
-        android:value="ca-app-pub-7277241406857965~8864891056"/>
+        android:name="com.google.android.gms.ads.APPLICATION_ID"
+        android:value="ca-app-pub-7277241406857965~8864891056"
+        tools:replace="android:value"/>
 
     <application
         android:name=".MyApplication"
