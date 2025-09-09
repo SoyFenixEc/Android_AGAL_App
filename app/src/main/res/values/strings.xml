@@ -1,0 +1,15 @@
+<resources>
+<string name="app_name">AGAL Plataforma Educativa</string>
+<string name="enter_subdomain_title">"Ingresa el dominio de tu plataforma educativa, lo enviamos  a tu correo electrónico con tus credenciales de acceso.</string>
+<string name="enter_subdomain_hint">mi_institucion.agalplataformaeducativa.com</string>
+<string name="save">Ingresar</string>
+<string name="invalid_domain">Por favor solicita el dominio correcto en tu Institución</string>
+<string name="no_internet_message">No hay conexión a internet.\nConéctate y vuelve a intentarlo.</string>
+<string name="no_internet_icon_desc">Icono de advertencia</string>
+<string name="retry">Reintentar</string>
+<string name="exit_message">Presiona nuevamente para salir</string>
+
+<!-- IDs de prueba de Google AdMob -->
+<string name="admob_banner_id" translatable="false">ca-app-pub-7277241406857965/5775693284</string>
+<string name="admob_interstitial_id" translatable="false">ca-app-pub-7277241406857965/7112540273</string>
+</resources>

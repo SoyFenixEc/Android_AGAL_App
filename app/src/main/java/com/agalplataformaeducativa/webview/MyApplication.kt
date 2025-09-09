@@ -1,0 +1,13 @@
+package app.agalplataformaeducativa.apps // ✅ ¡PAQUETE CORRECTO!
+
+import android.app.Application
+import com.google.android.gms.ads.MobileAds
+import com.google.firebase.FirebaseApp // ✅ ¡IMPORTA ESTO!
+
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        FirebaseApp.initializeApp(this) // ✅ ¡INICIALIZA FIREBASE!
+        MobileAds.initialize(this)
+    }
+}

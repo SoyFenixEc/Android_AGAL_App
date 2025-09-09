@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "726055931596",
+    "firebase_url": "https://agal-global.firebaseio.com",
+    "project_id": "agal-global",
+    "storage_bucket": "agal-global.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726055931596:android:0f00f376a48ae9909cbc69",
+        "android_client_info": {
+          "package_name": "app.agalplataformaeducativa.apps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi6XDYA8nJw3AkVXT6lqtfzllv5dHpIio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
