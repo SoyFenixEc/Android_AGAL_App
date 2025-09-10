@@ -54,13 +54,13 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen() // ✅ ¡PRIMERO!
-
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         FirebaseApp.initializeApp(this) // ✅ Inicializa Firebase
+    }
 
     override fun onStart() {
         super.onStart()
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    }
+
 
     private fun setupFilePicker() {
         filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
