@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ad-services-config>
+    <ad-tech-providers>
+        <ad-tech-provider>6000</ad-tech-provider> <!-- Google -->
+    </ad-tech-providers>
+</ad-services-config>
