@@ -54,18 +54,41 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen() // ✅ ¡PRIMERO!
+        installSplashScreen()
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        FirebaseApp.initializeApp(this) // ✅ Inicializa Firebase
+        // ✅ ¡Inicializa prefs INMEDIATAMENTE después de setContentView()!
+        prefs = PreferencesManager(this)
+
+        FirebaseApp.initializeApp(this)
+
+        adView = binding.adView
+        loadBannerAd()
+        setupFilePicker()
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            requestStoragePermission()
+        }
+
+        loadInterstitialAd()
+
+        if (prefs.isFirstLaunch) {
+            showSubdomainDialog()
+        } else {
+            loadWebView()
+        }
+
+        binding.btnPrivacy.setOnClickListener {
+            showPrivacyPolicy()
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        if (!prefs.isFirstLaunch) {
+        if (!prefs.isFirstLaunch) {  // ❌ ¡prefs no está inicializado todavía!
             Handler(Looper.getMainLooper()).postDelayed({
                 showInterstitialAdIfAvailable()
             }, 800)
