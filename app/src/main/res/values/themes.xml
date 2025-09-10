@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Tema principal -->
     <style name="Theme.AgalWebViewApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -11,7 +10,6 @@
 
     <style name="Theme.AgalWebViewApp.NoActionBar" parent="Theme.AgalWebViewApp" />
 
-    <!-- ✅ Tema de Splash Screen -->
     <style name="Theme.AgalWebViewApp.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>

@@ -16,6 +16,8 @@ import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.webkit.*
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.FirebaseApp
 import android.webkit.URLUtil
 import android.widget.EditText
 import android.widget.Toast
@@ -35,8 +37,6 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.google.firebase.FirebaseApp
 import android.util.Log
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseApp.initializeApp(this) // ✅ Inicializa Firebase
+
     override fun onStart() {
         super.onStart()
         if (!prefs.isFirstLaunch) {
@@ -67,6 +69,8 @@ class MainActivity : AppCompatActivity() {
                 showInterstitialAdIfAvailable()
             }, 800)
         }
+    }
+
     }
 
     private fun setupFilePicker() {

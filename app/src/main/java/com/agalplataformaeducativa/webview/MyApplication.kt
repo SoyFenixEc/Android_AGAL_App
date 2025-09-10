@@ -11,3 +11,4 @@ class MyApplication : Application() {
         MobileAds.initialize(this)
     }
 }
+

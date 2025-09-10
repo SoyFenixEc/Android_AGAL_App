@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-
-    package="com.agalplataformaeducativa.webview"> <!-- ✅ ¡DEBE SER ESTE! -->
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -22,29 +20,28 @@
         android:usesCleartextTraffic="false"
         tools:targetApi="31">
 
-        <!-- ✅ ¡AGREGA ESTE BLOQUE! -->
+        <!-- Solución para conflicto de AD_SERVICES_CONFIG -->
         <property
             android:name="android.adservices.AD_SERVICES_CONFIG"
             android:resource="@xml/gma_ad_services_config"
             tools:replace="android:resource" />
 
-        <!-- ESTA ES LA LÍNEA CORRECTA CON TUS CREDENCIALES -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7277241406857965~8864891056"
-            tools:replace="android:value"/>
+            android:value="ca-app-pub-3940256099942544~3347511513"
+            tools:replace="android:value" />
 
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AgalWebViewApp.Splash"
-        android:configChanges="orientation|screenSize|keyboardHidden"
-        tools:ignore="LockedOrientationActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
     </application>
 
