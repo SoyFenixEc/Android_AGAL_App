@@ -234,6 +234,9 @@ class MainActivity : AppCompatActivity() {
     private fun loadWebView() {
         val subdomain = prefs.savedSubdomain ?: return
 
+        // ✅ LOG: Mostrar qué URL estamos cargando
+        Log.d("WebView", "Cargando URL: https://$subdomain")
+
         binding.webview.settings.apply {
             javaScriptEnabled = true
             domStorageEnabled = true
@@ -246,6 +249,7 @@ class MainActivity : AppCompatActivity() {
             displayZoomControls = false
             cacheMode = WebSettings.LOAD_NO_CACHE
         }
+
 
         CookieManager.getInstance().apply {
             setAcceptCookie(true)
@@ -286,6 +290,7 @@ class MainActivity : AppCompatActivity() {
                 error: WebResourceError?
             ) {
                 super.onReceivedError(view, request, error)
+                Log.e("WebView", "Error: ${error?.description}")
                 showErrorPage()
             }
 
@@ -296,6 +301,7 @@ class MainActivity : AppCompatActivity() {
                 errorResponse: WebResourceResponse?
             ) {
                 val statusCode = errorResponse?.statusCode ?: 0
+                Log.e("WebView", "HTTP Error: $statusCode")
                 if (statusCode >= 400) {
                     showErrorPage()
                 }
@@ -324,7 +330,10 @@ class MainActivity : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 downloadFile(url, userAgent, contentDisposition, mimeType)
             } else {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
                     == PackageManager.PERMISSION_GRANTED
                 ) {
                     downloadFile(url, userAgent, contentDisposition, mimeType)
@@ -403,7 +412,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showErrorPage() {
-        // ✅ Cargar una página de error personalizada
         val errorHtml = """
         <!DOCTYPE html>
         <html>
