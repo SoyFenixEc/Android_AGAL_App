@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -234,8 +233,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadWebView() {
         val subdomain = prefs.savedSubdomain ?: return
 
-        // ✅ LOG: Mostrar qué URL estamos cargando
-        Log.d("WebView", "Cargando URL: https://$subdomain")
+        Log.d("WebView", "Cargando URL: https://$subdomain") // ✅ ¡AGREGA ESTO!
 
         binding.webview.settings.apply {
             javaScriptEnabled = true
