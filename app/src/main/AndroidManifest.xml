@@ -22,6 +22,12 @@
         android:usesCleartextTraffic="false"
         tools:targetApi="31">
 
+        <!-- ✅ ¡AGREGA ESTE BLOQUE! -->
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
+
         <!-- ESTA ES LA LÍNEA CORRECTA CON TUS CREDENCIALES -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

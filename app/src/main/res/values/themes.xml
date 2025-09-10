@@ -11,6 +11,7 @@
 
     <style name="Theme.AgalWebViewApp.NoActionBar" parent="Theme.AgalWebViewApp" />
 
+    <!-- ✅ Tema de Splash Screen -->
     <style name="Theme.AgalWebViewApp.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
