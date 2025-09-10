@@ -286,6 +286,18 @@ class MainActivity : AppCompatActivity() {
                 super.onReceivedError(view, request, error)
                 showErrorPage()
             }
+
+            // ✅ ¡NUEVO! Intercepta errores HTTP (404, 500, etc.)
+            override fun onReceivedHttpError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                errorResponse: WebResourceResponse?
+            ) {
+                val statusCode = errorResponse?.statusCode ?: 0
+                if (statusCode >= 400) {
+                    showErrorPage()
+                }
+            }
         }
 
         binding.webview.webChromeClient = object : WebChromeClient() {
@@ -389,7 +401,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showErrorPage() {
-        Toast.makeText(this, "Error al cargar la página", Toast.LENGTH_SHORT).show()
+        // ✅ Cargar una página de error personalizada
+        val errorHtml = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f5f5f5; }
+                .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                h1 { color: #e74c3c; }
+                p { margin: 20px 0; }
+                button { padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>¡Oops! Algo salió mal</h1>
+                <p>No se pudo cargar la página. Verifica tu conexión o intenta más tarde.</p>
+                <button onclick="window.location.reload();">Reintentar</button>
+            </div>
+        </body>
+        </html>
+    """.trimIndent()
+
+        binding.webview.loadData(errorHtml, "text/html", "UTF-8")
     }
 
     override fun onBackPressed() {
