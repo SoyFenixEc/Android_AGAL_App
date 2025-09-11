@@ -303,9 +303,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 val statusCode = errorResponse?.statusCode ?: 0
                 Log.e("WebView", "HTTP Error: $statusCode")
-                if (statusCode >= 400) {
-                    showErrorPage()
-                }
+                showErrorPage(statusCode) // ✅ ¡Pasa el código de error!
             }
         }
 
@@ -412,7 +410,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showErrorPage() {
+    private fun showErrorPage(errorCode: Int = 0) {
+        val errorMessage = when (errorCode) {
+            404 -> "El subdominio no existe. Verifica e intenta de nuevo."
+            500 -> "Error del servidor. Intenta más tarde."
+            else -> "No se pudo cargar la página. Verifica tu conexión."
+        }
+
         val errorHtml = """
         <!DOCTYPE html>
         <html>
@@ -423,14 +427,14 @@ class MainActivity : AppCompatActivity() {
                 body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f5f5f5; }
                 .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
                 h1 { color: #e74c3c; }
-                p { margin: 20px 0; }
-                button { padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+                p { margin: 20px 0; font-size: 18px; }
+                button { padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
             </style>
         </head>
         <body>
             <div class="container">
                 <h1>¡Oops! Algo salió mal</h1>
-                <p>No se pudo cargar la página. Verifica tu conexión o intenta más tarde.</p>
+                <p>$errorMessage</p>
                 <button onclick="window.location.reload();">Reintentar</button>
             </div>
         </body>
