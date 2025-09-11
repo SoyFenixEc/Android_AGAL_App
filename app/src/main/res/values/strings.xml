@@ -11,8 +11,7 @@
 
 <!-- IDs de prueba de Google AdMob -->
 
-    <string name="admob_banner_id">ca-app-pub-7277241406857965/5775693284</string>
-    <string name="admob_interstitial_id">ca-app-pub-7277241406857965/7112540273</string>
-    <string name="admob_app_id">ca-app-pub-7277241406857965~8864891056</string>
+    <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
 
 </resources>

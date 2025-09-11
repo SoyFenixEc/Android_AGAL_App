@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         loadInterstitialAd()
 
-        if (prefs.isFirstLaunch) {
+        if (prefs.isFirstLaunch || prefs.savedSubdomain.isNullOrBlank()) {
             showSubdomainDialog()
         } else {
             loadWebView()
