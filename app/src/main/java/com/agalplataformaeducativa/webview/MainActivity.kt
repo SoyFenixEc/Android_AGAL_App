@@ -235,7 +235,8 @@ class MainActivity : AppCompatActivity() {
     private fun loadWebView() {
         Log.d("WebView", "loadWebView() called") // ✅ LOG 1
 
-        val subdomain = prefs.savedSubdomain ?: return
+        //val subdomain = prefs.savedSubdomain ?: return
+        val subdomain = "lapradera.agalplataformaeducativa.com"
 
         Log.d("WebView", "Loading URL: https://$subdomain") // ✅ LOG 2
 
