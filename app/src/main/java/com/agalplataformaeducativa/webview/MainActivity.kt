@@ -55,13 +55,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+        Log.d("MainActivity", "onCreate() called") // ✅ LOG 1
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ✅ ¡Inicializa prefs INMEDIATAMENTE después de setContentView()!
-        prefs = PreferencesManager(this)
+        Log.d("MainActivity", "setContentView() done") // ✅ LOG 2
 
+        prefs = PreferencesManager(this)
         FirebaseApp.initializeApp(this)
 
         adView = binding.adView
@@ -233,11 +235,14 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebView() {
-        Log.d("WebView", "loadWebView() called") // ✅ LOG 1
+        Log.d("WebView", "loadWebView() called")
 
         val subdomain = prefs.savedSubdomain ?: return
 
-        Log.d("WebView", "Loading URL: https://$subdomain") // ✅ LOG 2
+        Log.d("WebView", "Loading URL: https://$subdomain")
+
+        // ✅ Forzar visibilidad del WebView
+        binding.webview.visibility = View.VISIBLE
 
         binding.webview.settings.apply {
             javaScriptEnabled = true
@@ -266,7 +271,7 @@ class MainActivity : AppCompatActivity() {
             binding.webview.reload()
         }
 
-        // ✅ CONFIGURA EL WEBVIEWCLIENT ANTES DE LOADURL
+        // ✅ Configurar WebViewClient ANTES de cargar la URL
         binding.webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url.toString()
@@ -303,7 +308,9 @@ class MainActivity : AppCompatActivity() {
             ) {
                 val statusCode = errorResponse?.statusCode ?: 0
                 Log.e("WebView", "HTTP Error: $statusCode")
-                showErrorPage(statusCode) // ✅ ¡Pasa el código de error!
+                if (statusCode >= 400) {
+                    showErrorPage(statusCode)
+                }
             }
         }
 
@@ -347,7 +354,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isOnline()) {
             binding.webview.loadUrl("https://$subdomain")
-            Log.d("WebView", "URL loaded") // ✅ LOG 3
+            Log.d("WebView", "URL loaded")
         } else {
             showNoInternetScreen()
         }

@@ -31,7 +31,7 @@
 
     </LinearLayout>
 
-    <!-- ✅ Botón flotante para Política de Privacidad -->
+    <!-- ✅ Botón de Política de Privacidad -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnPrivacy"
         android:layout_width="wrap_content"
