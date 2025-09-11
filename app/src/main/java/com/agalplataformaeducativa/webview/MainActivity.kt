@@ -87,10 +87,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (!prefs.isFirstLaunch) {  // ❌ ¡prefs no está inicializado todavía!
+        if (!prefs.isFirstLaunch) {
             Handler(Looper.getMainLooper()).postDelayed({
-                showInterstitialAdIfAvailable()
-            }, 800)
+                showInterstitialThenLoadWebView()
+            }, 500) // Pequeño retraso para asegurar que todo esté listo
         }
     }
 
@@ -132,17 +132,18 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun showInterstitialAdIfAvailable() {
+    private fun showInterstitialThenLoadWebView() {
         if (interstitialAd != null) {
             interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     interstitialAd = null
+                    loadWebView() // ✅ Cargar WebView DESPUÉS de cerrar el anuncio
                     loadInterstitialAd()
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                    Log.e(TAG, "Ad failed to show: ${adError.message}")
                     interstitialAd = null
+                    loadWebView() // ✅ Cargar WebView SIEMPRE, incluso si falla el anuncio
                     loadInterstitialAd()
                 }
 
@@ -152,6 +153,7 @@ class MainActivity : AppCompatActivity() {
             }
             interstitialAd?.show(this)
         } else {
+            loadWebView() // ✅ ¡CARGAR WEBVIEW SIEMPRE!
             loadInterstitialAd()
         }
     }
@@ -207,9 +209,9 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     prefs.savedSubdomain = subdomain
                     prefs.isFirstLaunch = false
-                    loadWebView()
+                    loadInterstitialAd()
                     Handler(Looper.getMainLooper()).postDelayed({
-                        showInterstitialAdIfAvailable()
+                        showInterstitialThenLoadWebView()
                     }, 1000)
                 }
             } catch (e: Exception) {
@@ -231,9 +233,11 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadWebView() {
+        Log.d("WebView", "loadWebView() called") // ✅ LOG 1
+
         val subdomain = prefs.savedSubdomain ?: return
 
-        Log.d("WebView", "Cargando URL: https://$subdomain") // ✅ ¡AGREGA ESTO!
+        Log.d("WebView", "Loading URL: https://$subdomain") // ✅ LOG 2
 
         binding.webview.settings.apply {
             javaScriptEnabled = true
@@ -347,6 +351,7 @@ class MainActivity : AppCompatActivity() {
 
         if (isOnline()) {
             binding.webview.loadUrl("https://$subdomain")
+            Log.d("WebView", "URL loaded") // ✅ LOG 3
         } else {
             showNoInternetScreen()
         }
