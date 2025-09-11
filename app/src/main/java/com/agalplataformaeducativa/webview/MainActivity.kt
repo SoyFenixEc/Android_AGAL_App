@@ -252,7 +252,6 @@ class MainActivity : AppCompatActivity() {
             cacheMode = WebSettings.LOAD_NO_CACHE
         }
 
-
         CookieManager.getInstance().apply {
             setAcceptCookie(true)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -267,6 +266,7 @@ class MainActivity : AppCompatActivity() {
             binding.webview.reload()
         }
 
+        // ✅ CONFIGURA EL WEBVIEWCLIENT ANTES DE LOADURL
         binding.webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url.toString()
@@ -296,7 +296,6 @@ class MainActivity : AppCompatActivity() {
                 showErrorPage()
             }
 
-            // ✅ ¡NUEVO! Intercepta errores HTTP (404, 500, etc.)
             override fun onReceivedHttpError(
                 view: WebView?,
                 request: WebResourceRequest?,
@@ -335,8 +334,7 @@ class MainActivity : AppCompatActivity() {
                 if (ContextCompat.checkSelfPermission(
                         this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    == PackageManager.PERMISSION_GRANTED
+                    ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     downloadFile(url, userAgent, contentDisposition, mimeType)
                 } else {
