@@ -238,11 +238,13 @@ class MainActivity : AppCompatActivity() {
     private fun loadWebView() {
         Log.d("WebView", "loadWebView() called")
 
+        // ✅ ¡PRUEBA CON GOOGLE.COM!
+        //val subdomain = "www.google.com"
         val subdomain = prefs.savedSubdomain ?: return
+        val url = "https://$subdomain"
 
-        Log.d("WebView", "Loading URL: https://$subdomain")
+        Log.d("WebView", "Loading URL: $url")
 
-        // ✅ Forzar visibilidad del WebView
         binding.webview.visibility = View.VISIBLE
 
         binding.webview.settings.apply {
@@ -276,7 +278,7 @@ class MainActivity : AppCompatActivity() {
         binding.webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url.toString()
-                return if (url.contains("agalplataformaeducativa.com")) {
+                return if (url.contains("google.com")) {
                     false
                 } else {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
@@ -354,7 +356,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         if (isOnline()) {
-            binding.webview.loadUrl("https://$subdomain")
+            binding.webview.loadUrl(url) // ✅ ¡CARGAR GOOGLE.COM!
             Log.d("WebView", "URL loaded")
         } else {
             showNoInternetScreen()
