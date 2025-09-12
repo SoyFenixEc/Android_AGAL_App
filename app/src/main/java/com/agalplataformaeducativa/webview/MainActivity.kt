@@ -1,5 +1,6 @@
 package com.agalplataformaeducativa.webview
 
+import android.view.View
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DownloadManager
@@ -15,7 +16,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.view.View // ✅ ¡AGREGA ESTA LÍNEA!
 import android.webkit.*
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.FirebaseApp
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         if (!prefs.isFirstLaunch) {
             Handler(Looper.getMainLooper()).postDelayed({
                 showInterstitialThenLoadWebView()
-            }, 500) // Pequeño retraso para asegurar que todo esté listo
+            }, 2000) // Pequeño retraso para asegurar que todo esté listo
         }
     }
 
@@ -238,8 +238,6 @@ class MainActivity : AppCompatActivity() {
     private fun loadWebView() {
         Log.d("WebView", "loadWebView() called")
 
-        // ✅ ¡PRUEBA CON GOOGLE.COM!
-        //val subdomain = "www.google.com"
         val subdomain = prefs.savedSubdomain ?: return
         val url = "https://$subdomain"
 
@@ -257,7 +255,7 @@ class MainActivity : AppCompatActivity() {
             setSupportZoom(true)
             builtInZoomControls = true
             displayZoomControls = false
-            cacheMode = WebSettings.LOAD_NO_CACHE
+            cacheMode = WebSettings.LOAD_DEFAULT // ✅ Cambiar a LOAD_DEFAULT
         }
 
         CookieManager.getInstance().apply {
@@ -274,93 +272,14 @@ class MainActivity : AppCompatActivity() {
             binding.webview.reload()
         }
 
-        // ✅ Configurar WebViewClient ANTES de cargar la URL
         binding.webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                val url = request?.url.toString()
-                return if (url.contains("google.com")) {
-                    false
-                } else {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                    true
-                }
-            }
-
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                binding.swipeRefresh.isRefreshing = true
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                binding.swipeRefresh.isRefreshing = false
-            }
-
-            override fun onReceivedError(
-                view: WebView?,
-                request: WebResourceRequest?,
-                error: WebResourceError?
-            ) {
-                super.onReceivedError(view, request, error)
-                Log.e("WebView", "Error: ${error?.description}")
-                showErrorPage()
-            }
-
-            override fun onReceivedHttpError(
-                view: WebView?,
-                request: WebResourceRequest?,
-                errorResponse: WebResourceResponse?
-            ) {
-                val statusCode = errorResponse?.statusCode ?: 0
-                Log.e("WebView", "HTTP Error: $statusCode")
-                if (statusCode >= 400) {
-                    showErrorPage(statusCode)
-                }
+                return false // ✅ Dejar que el WebView maneje todo
             }
         }
 
-        binding.webview.webChromeClient = object : WebChromeClient() {
-            override fun onShowFileChooser(
-                webView: WebView,
-                filePathCallback: ValueCallback<Array<Uri>>,
-                fileChooserParams: FileChooserParams
-            ): Boolean {
-                this@MainActivity.filePathCallback = filePathCallback
-                val intent = fileChooserParams.createIntent()
-                try {
-                    filePickerLauncher.launch(intent)
-                } catch (e: Exception) {
-                    filePathCallback.onReceiveValue(null)
-                    return false
-                }
-                return true
-            }
-        }
-
-        binding.webview.setDownloadListener(DownloadListener { url, userAgent, contentDisposition, mimeType, contentLength ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                downloadFile(url, userAgent, contentDisposition, mimeType)
-            } else {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    downloadFile(url, userAgent, contentDisposition, mimeType)
-                } else {
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        1
-                    )
-                }
-            }
-        })
-
-        if (isOnline()) {
-            binding.webview.loadUrl(url) // ✅ ¡CARGAR GOOGLE.COM!
-            Log.d("WebView", "URL loaded")
-        } else {
-            showNoInternetScreen()
-        }
+        // ✅ Cargar la URL directamente
+        binding.webview.loadUrl(url)
     }
 
     private fun downloadFile(url: String, userAgent: String, contentDisposition: String, mimeType: String) {
@@ -420,39 +339,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showErrorPage(errorCode: Int = 0) {
-        val errorMessage = when (errorCode) {
-            404 -> "El subdominio no existe. Verifica e intenta de nuevo."
-            500 -> "Error del servidor. Intenta más tarde."
-            else -> "No se pudo cargar la página. Verifica tu conexión."
-        }
 
-        val errorHtml = """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f5f5f5; }
-                .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-                h1 { color: #e74c3c; }
-                p { margin: 20px 0; font-size: 18px; }
-                button { padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>¡Oops! Algo salió mal</h1>
-                <p>$errorMessage</p>
-                <button onclick="window.location.reload();">Reintentar</button>
-            </div>
-        </body>
-        </html>
-    """.trimIndent()
-
-        binding.webview.loadData(errorHtml, "text/html", "UTF-8")
-    }
 
     override fun onBackPressed() {
         if (binding.webview.canGoBack()) {
