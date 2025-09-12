@@ -39,6 +39,8 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import android.util.Log
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 
 class MainActivity : AppCompatActivity() {
 
@@ -83,9 +85,7 @@ class MainActivity : AppCompatActivity() {
             loadWebView()
         }
 
-        binding.btnPrivacy.setOnClickListener {
-            showPrivacyPolicy()
-        }
+
     }
 
     override fun onStart() {
@@ -182,10 +182,33 @@ class MainActivity : AppCompatActivity() {
     private fun showSubdomainDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_subdomain, null)
         val editText = dialogView.findViewById<EditText>(R.id.editTextSubdomain)
+        val checkboxTerms = dialogView.findViewById<com.google.android.material.checkbox.MaterialCheckBox>(R.id.checkboxTerms)
+        val textViewTermsLink = dialogView.findViewById<com.google.android.material.textview.MaterialTextView>(R.id.textViewTermsLink)
+
+        // ✅ Abrir política de privacidad en el navegador
+        textViewTermsLink.setOnClickListener {
+            val url = "https://agalplataformaeducativa.com/politica_privacidad.html"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+
+        // ✅ Aplicar subrayado al texto
+        val termsText = getString(R.string.terms_link)
+        val spannableString = SpannableString(termsText)
+        spannableString.setSpan(UnderlineSpan(), 0, termsText.length, 0)
+        textViewTermsLink.text = spannableString
+
 
         AlertDialog.Builder(this)
             .setView(dialogView)
             .setPositiveButton(R.string.save) { _, _ ->
+                // ✅ Verificar que se haya marcado el checkbox
+                if (!checkboxTerms.isChecked) {
+                    Toast.makeText(this, "Debes aceptar los términos y condiciones", Toast.LENGTH_SHORT).show()
+                    showSubdomainDialog() // Volver a mostrar el diálogo
+                    return@setPositiveButton
+                }
+
                 val input = editText.text.toString().trim()
                 if (isValidSubdomain(input)) {
                     // ✅ Validar que el subdominio responda antes de guardarlo
@@ -364,20 +387,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun showPrivacyPolicy() {
-        val dialog = AlertDialog.Builder(this)
-            .setTitle("Política de Privacidad")
-            .setPositiveButton("Aceptar", null)
-            .create()
 
-        val webView = WebView(this).apply {
-            settings.javaScriptEnabled = false
-            loadUrl("file:///android_asset/privacy_policy.html")
-        }
-
-        dialog.setView(webView)
-        dialog.show()
-    }
 
     companion object {
         const val FILE_CHOOSER_REQUEST_CODE = 100

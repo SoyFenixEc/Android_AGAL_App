@@ -1,6 +1,6 @@
 <resources>
 <string name="app_name">AGAL Plataforma Educativa</string>
-<string name="enter_subdomain_title">"Ingresa el dominio de tu plataforma educativa, lo enviamos  a tu correo electrónico con tus credenciales de acceso.</string>
+<string name="enter_subdomain_title">"Ingresa el dominio de tu plataforma educativa, lo enviamos a tu correo electrónico con tus credenciales de acceso.</string>
 <string name="enter_subdomain_hint">mi_institucion.agalplataformaeducativa.com</string>
 <string name="save">Ingresar</string>
 <string name="invalid_domain">Por favor solicita el dominio correcto en tu Institución</string>
@@ -9,9 +9,14 @@
 <string name="retry">Reintentar</string>
 <string name="exit_message">Presiona nuevamente para salir</string>
 
+    <!-- ✅ Nuevos strings para los términos -->
+    <string name="accept_terms">Acepto los términos y condiciones</string>
+    <string name="terms_link">Leer Política de Privacidad</string>
+    <string name="terms_url">https://www.agalplataformaeducativa.com/politica-de-privacidad</string>
+
 <!-- IDs de prueba de Google AdMob -->
 
-    <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="admob_interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_banner_id">ca-app-pub-7277241406857965/5775693284</string>
+    <string name="admob_interstitial_id">ca-app-pub-7277241406857965/7112540273</string>
 
 </resources>
