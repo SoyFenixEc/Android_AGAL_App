@@ -238,6 +238,8 @@ class MainActivity : AppCompatActivity() {
     private fun loadWebView() {
         Log.d("WebView", "loadWebView() called")
 
+        // ✅ ¡PRUEBA CON GOOGLE.COM!
+        //val subdomain = "www.google.com"
         val subdomain = prefs.savedSubdomain ?: return
         val url = "https://$subdomain"
 
@@ -276,7 +278,7 @@ class MainActivity : AppCompatActivity() {
         binding.webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url.toString()
-                return if (url.contains("agalplataformaeducativa.com")) {
+                return if (url.contains("google.com")) {
                     false
                 } else {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
@@ -290,7 +292,6 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 binding.swipeRefresh.isRefreshing = false
-                Log.d("WebView", "Page loaded: $url")
             }
 
             override fun onReceivedError(
@@ -300,7 +301,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 super.onReceivedError(view, request, error)
                 Log.e("WebView", "Error: ${error?.description}")
-                showErrorPage(error?.errorCode ?: 0)
+                showErrorPage()
             }
 
             override fun onReceivedHttpError(
@@ -310,7 +311,9 @@ class MainActivity : AppCompatActivity() {
             ) {
                 val statusCode = errorResponse?.statusCode ?: 0
                 Log.e("WebView", "HTTP Error: $statusCode")
-                showErrorPage(statusCode)
+                if (statusCode >= 400) {
+                    showErrorPage(statusCode)
+                }
             }
         }
 
@@ -353,8 +356,8 @@ class MainActivity : AppCompatActivity() {
         })
 
         if (isOnline()) {
-            binding.webview.loadUrl(url)
-            Log.d("WebView", "URL loading started")
+            binding.webview.loadUrl(url) // ✅ ¡CARGAR GOOGLE.COM!
+            Log.d("WebView", "URL loaded")
         } else {
             showNoInternetScreen()
         }
@@ -421,7 +424,6 @@ class MainActivity : AppCompatActivity() {
         val errorMessage = when (errorCode) {
             404 -> "El subdominio no existe. Verifica e intenta de nuevo."
             500 -> "Error del servidor. Intenta más tarde."
-            -2 -> "No se pudo conectar a internet. Verifica tu conexión."
             else -> "No se pudo cargar la página. Verifica tu conexión."
         }
 
