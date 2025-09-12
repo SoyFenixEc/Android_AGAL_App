@@ -277,15 +277,12 @@ class MainActivity : AppCompatActivity() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 val url = request?.url.toString()
                 return if (url.contains("agalplataformaeducativa.com")) {
-                    false // ✅ permitir dentro del WebView
+                    false
                 } else {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) // abrir fuera
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                     true
                 }
             }
-
-
-
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 binding.swipeRefresh.isRefreshing = true
